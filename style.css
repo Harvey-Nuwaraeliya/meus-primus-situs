@@ -1,0 +1,41 @@
+body {
+    background-color: #111; /* 黒背景で没入感を出す */
+    color: white;
+    overflow-x: hidden;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layer {
+    position: absolute; /* これで重なりを作る */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.background {
+    font-size: 15rem;
+    color: rgba(255, 255, 255, 0.05); /* 極薄い色で背景に */
+    z-index: 1;
+    transform: rotate(-10deg);
+}
+
+.middle {
+    font-size: 5rem;
+    z-index: 2;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* 光らせる */
+}
+
+.foreground {
+    font-size: 2rem;
+    color: #ff00ff;
+    z-index: 3;
+    border: 2px solid #ff00ff;
+    padding: 10px;
+    transform: translate(100px, 50px); /* 位置をずらしてコラージュ感を出す */
+}
