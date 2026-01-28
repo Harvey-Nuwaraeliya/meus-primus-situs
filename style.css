@@ -1,41 +1,71 @@
-body {
-    background-color: #111; /* 黒背景で没入感を出す */
-    color: white;
-    overflow-x: hidden;
+/* カスタムアニメーション定義 */
+        
+/* 1. キャラクターが右から放り投げられるアニメーション */
+@keyframes throwIn {
+    0% {
+        /* 画面外の右上からスタート */
+        transform: translate(100vw, -50vh) rotate(45deg);
+        opacity: 0;
+    }
+    100% {
+        /* 定位置に着地（最終的な角度も指定） */
+        transform: translate(0, 0) rotate(10deg);
+        opacity: 1;
+    }
 }
 
-.container {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* 2. 着地時のしりもちバウンド */
+@keyframes buttBounce {
+    0% { transform: scale(1, 1); }
+    30% { transform: scale(1.2, 0.8); } /* 潰れる */
+    60% { transform: scale(0.9, 1.1); } /* 伸びる */
+    100% { transform: scale(1, 1); }
 }
 
-.layer {
-    position: absolute; /* これで重なりを作る */
-    font-weight: bold;
-    text-transform: uppercase;
+/* 3. 画面全体のシェイク（衝撃） */
+@keyframes impactShake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-10px, -10px) rotate(-1deg); }
+    20% { transform: translate(10px, 10px) rotate(1deg); }
+    30% { transform: translate(-10px, 10px) rotate(0deg); }
+    40% { transform: translate(10px, -10px) rotate(1deg); }
+    50% { transform: translate(-5px, 0) rotate(-1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-.background {
-    font-size: 15rem;
-    color: rgba(255, 255, 255, 0.05); /* 極薄い色で背景に */
-    z-index: 1;
-    transform: rotate(-10deg);
+.animate-throw-in {
+    animation: throwIn 0.8s ease-out forwards;
 }
 
-.middle {
-    font-size: 5rem;
-    z-index: 2;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* 光らせる */
+.animate-butt-bounce {
+    animation: buttBounce 0.4s ease-out forwards;
 }
 
-.foreground {
-    font-size: 2rem;
-    color: #ff00ff;
-    z-index: 3;
-    border: 2px solid #ff00ff;
-    padding: 10px;
-    transform: translate(100px, 50px); /* 位置をずらしてコラージュ感を出す */
+.animate-impact-shake {
+    animation: impactShake 0.5s ease-out forwards;
+}
+
+/* 文字の強調アウトライン（指定色 #edd8ec が薄いため、濃い色で縁取り） */
+.text-outline {
+    text-shadow: 
+        2px 2px 0px #4a4a4a,
+        -2px -2px 0px #4a4a4a,
+        -2px 2px 0px #4a4a4a,
+        2px -2px 0px #4a4a4a;
+}
+
+/* フォント設定 */
+.font-kiwi {
+    font-family: 'Kiwi Maru', serif;
+}
+.font-terminal {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Ly風の点滅カーソル */
+.cursor-blink {
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+    50% { opacity: 0; }
 }
