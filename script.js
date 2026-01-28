@@ -7,10 +7,10 @@ const PHASE = {
     MAIN: 'main'
 };
 
-// --- コンポーネント1: Arch Linux風ロード画面 ---
+// --- コンポーネント1: ロード画面 ---
 const BootScreen = ({ onComplete }) => {
     const [logs, setLogs] = useState([]);
-    const bootLogs = [ // ウェブサイトの内容に合わせてカスタマイズ
+    const bootLogs = [ 
         "[    0.000000] Harveyのウェブサイト v0.9",
         "[    0.000000] Command line: entry=index.html mode=Jikoshoukai",
         "[    0.034211] Initializing render engine...",
@@ -50,7 +50,7 @@ const BootScreen = ({ onComplete }) => {
     );
 };
 
-// --- コンポーネント2: Ly (Display Manager) 風ログイン画面 ---
+// --- コンポーネント2:---
 const LyScreen = ({ onComplete }) => {
     const [step, setStep] = useState(0); // 0:表示, 1:入力中, 2:完了
     const [passwordText, setPasswordText] = useState('');
@@ -123,7 +123,7 @@ const LyScreen = ({ onComplete }) => {
 // --- コンポーネント3: メイン画面 ---
 const MainScreen = () => {
     const [animationState, setAnimationState] = useState('waiting'); // waiting -> thrown -> landed
-    const [characterImage, setCharacterImage] = useState('images/character_fall.png');
+    const [characterImage, setCharacterImage] = useState('./images/character_fall.png');
     
     useEffect(() => {
         // マウント直後にアニメーション開始
@@ -142,7 +142,7 @@ const MainScreen = () => {
         if (animationState === 'landed') {
             // 0.5秒後に画像を切り替える
             const switchImageTimer = setTimeout(() => {
-                setCharacterImage('images/character_normal.png');
+                setCharacterImage('./images/character_normal.png');
             }, 500);
 
             return () => clearTimeout(switchImageTimer);
@@ -194,12 +194,6 @@ const MainScreen = () => {
                                 className={`w-full h-full object-contain drop-shadow-2xl ${animationState === 'landed' ? 'animate-butt-bounce' : ''}`}
                             />
                             
-                            {/* 装飾：着地時のエフェクト（漫符のようなもの） */}
-                            {animationState === 'landed' && (
-                                <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-                                    <span className="text-4xl animate-bounce">💨</span>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
