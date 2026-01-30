@@ -180,13 +180,11 @@ const FastFetchProfile = () => {
         "Note": "なんかそれっぽいことを書いといてください。わからないです。"
     };
     const asciiLogo = `
-          /\\
-         /  \\
-        /    \\
-       /      \\
-      /        \\
-     /          \\
-    /____________\\
+    H   H   EEEEE   AAA   RRRR   V   V  EEEEE  Y   Y
+    H   H   E      A   A  R   R  V   V  E       Y Y
+    HHHHH   EEEE   AAAAA  RRRR    V V   EEEE     Y
+    H   H   E      A   A  R  R     V    E        Y
+    H   H   EEEEE  A   A  R   R    V     EEEEE    Y
     `;
 
     return (
