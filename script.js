@@ -177,7 +177,7 @@ const FastFetchProfile = () => {
         "Hobbies": "散歩, 映画/ドラマ, 紅茶",
         "Born": "埼玉県",
         "Residence": "東京都",
-        "Note": "なんかそれっぽいことを書いといてください。わからないです。"
+        "Note": "予定は未定"
     };
     const asciiLogo = `
           /\\
@@ -216,7 +216,7 @@ const ImageViewer = () => {
     useEffect(() => {
         const slideInterval = setInterval(() => {
             setCurrentIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000); // 3秒ごとに画像を切り替え
+        }, 10000); // 10秒ごとに画像を切り替え
 
         return () => clearInterval(slideInterval); // コンポーネントのアンマウント時にタイマーをクリア
     }, []);
@@ -250,11 +250,11 @@ const Browser = () => (
 const SocialLinks = () => (
     <div className="text-slate-700 font-terminal space-y-3">
         <h3 className="text-lg text-slate-800 border-b border-slate-300/70 pb-1 mb-3">~/Links</h3>
-        <a href="#" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
+        <a href="https://x.com/HarveySupekuta" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
             <img src="./images/Twitter.png" alt="Twitter Icon" className="w-6 h-6 rounded" />
             <span>Twitter</span>
         </a>
-        <a href="#" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
+        <a href="https://vrchat.com/home/user/usr_d4d48c3d-4c5a-4d3a-9962-066a7e699a3a" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
             <img src="./images/VRC.png" alt="VRChat Icon" className="w-6 h-6" />
             <span>VRChat</span>
         </a>
@@ -336,7 +336,7 @@ const MainScreen = () => {
                     <Window
                         title="ImageViewer"
                         initialPosition={{ x: '55%', y: '25%' }}
-                        size={{ w: '25%', h: '55%' }}
+                        size={{ w: '40%', h: '60%' }}
                         animationDelay={400}
                         contentDelay={500}
                         customClass="flex items-center justify-center"
