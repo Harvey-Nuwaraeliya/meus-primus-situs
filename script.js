@@ -120,94 +120,256 @@ const LyScreen = ({ onComplete }) => {
     );
 };
 
-// --- コンポーネント3: メイン画面 ---
-const MainScreen = () => {
-    const [animationState, setAnimationState] = useState('waiting'); // waiting -> thrown -> landed
-    const [characterImage, setCharacterImage] = useState('./images/character_fall.png');
-    
+// --- コンポーネント3: メイン画面 (Hyprland風) ---
+
+// --- 汎用的なウィンドウコンポーネント ---
+const Window = ({ title, children, initialPosition, size, animationDelay, contentDelay, customClass, bgStyle }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isContentVisible, setIsContentVisible] = useState(false);
+
     useEffect(() => {
-        // マウント直後にアニメーション開始
-        setAnimationState('thrown');
-        
-        // 0.8秒後に着地（シェイク開始）
-        const landTimer = setTimeout(() => {
-            setAnimationState('landed');
-        }, 800); // CSSのthrowIn時間と合わせる
+        const openTimer = setTimeout(() => setIsOpen(true), animationDelay);
+        const contentTimer = setTimeout(() => setIsContentVisible(true), animationDelay + contentDelay);
 
-        return () => clearTimeout(landTimer);
-    }, []);
+        return () => {
+            clearTimeout(openTimer);
+            clearTimeout(contentTimer);
+        };
+    }, [animationDelay, contentDelay]);
 
-    // animationStateが 'landed' に変わったのを監視して画像を切り替える
-    useEffect(() => {
-        if (animationState === 'landed') {
-            // 0.5秒後に画像を切り替える
-            const switchImageTimer = setTimeout(() => {
-                setCharacterImage('./images/character_normal.png');
-            }, 500);
-
-            return () => clearTimeout(switchImageTimer);
-        }
-    }, [animationState]);
+    const positionAndSize = {
+        top: initialPosition.y,
+        left: initialPosition.x,
+        width: size.w,
+        height: size.h,
+    };
 
     return (
-        // 画面全体。着地(landed)時にシェイクする
-        <div className={`h-screen w-screen overflow-hidden bg-[#e4eff0] relative flex items-center justify-center ${animationState === 'landed' ? 'animate-impact-shake' : ''}`}>
+        <div
+            className={`absolute transition-all duration-500 ease-out ${customClass || ''} ${isOpen ? 'opacity-100 transform-none' : 'opacity-0 translate-y-8'}`}
+            style={positionAndSize}
+        >
+            <div className={`h-full w-full rounded-2xl shadow-2xl border border-slate-300/50 flex flex-col ${bgStyle}`}>
+                {/* New minimal header, no close buttons */}
+                <div className="p-3 border-b border-slate-300/70 flex-shrink-0">
+                    <h3 className="text-sm font-medium text-slate-700 font-terminal text-center">
+                        {title}
+                    </h3>
+                </div>
+
+                {/* ウィンドウのコンテンツ */}
+                <div className={`p-4 overflow-auto h-full transition-opacity duration-700 ${isContentVisible ? 'opacity-100' : 'opacity-0'}`}>
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- 各ウィンドウのコンテンツ ---
+
+// 1. fastfetch風プロフィール
+const FastFetchProfile = () => {
+    const profile = {
+        "Name": "Harvey",
+        "Gender": "♂",
+        "Age": "?",
+        "Hobbies": "散歩, 映画/ドラマ, 紅茶",
+        "Born": "埼玉県",
+        "Residence": "東京都",
+        "Note": "なんかそれっぽいことを書いといてください。わからないです。"
+    };
+    const asciiLogo = `
+          /\\
+         /  \\
+        /    \\
+       /      \\
+      /        \\
+     /          \\
+    /____________\\
+    `;
+
+    return (
+        <div className="font-terminal text-sm text-slate-600 flex space-x-4">
+            <pre className="text-slate-500 text-xs leading-tight">{asciiLogo}</pre>
+            <div className="border-l border-slate-400 pl-4">
+                <p className="text-slate-800 font-bold">guest@harvey-desktop</p>
+                <p>--------------------</p>
+                {Object.entries(profile).map(([key, value]) => (
+                    <p key={key}>
+                        <span className="font-bold text-slate-700">{key}:</span> {value}
+                    </p>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// 2. イメージビューア
+const ImageViewer = () => {
+    const images = [
+        './images/character_normal.png',
+        './images/character_stand.png'
+    ];
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const slideInterval = setInterval(() => {
+            setCurrentIndex(prevIndex => (prevIndex + 1) % images.length);
+        }, 3000); // 3秒ごとに画像を切り替え
+
+        return () => clearInterval(slideInterval); // コンポーネントのアンマウント時にタイマーをクリア
+    }, []);
+
+    return (
+        <div className="w-full h-full flex items-center justify-center bg-black/20 rounded-lg">
+            <img src={images[currentIndex]} alt={`キャラクター ${currentIndex + 1}`} className="max-h-full max-w-full object-contain drop-shadow-lg" />
+        </div>
+    );
+};
+
+// 3. ブラウザ
+const Browser = () => (
+    <div className="h-full flex flex-col">
+        <div className="flex items-center bg-slate-200/60 p-1 rounded-md mb-2">
+            <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+            <div className="bg-white/50 text-slate-700 text-xs rounded-md px-3 py-1 ml-2 flex-grow">
+                https://harvey.dev/
+            </div>
+        </div>
+        <div className="flex-grow flex items-center justify-center">
+            <h1 className="font-kiwi text-5xl text-slate-700 tracking-widest" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.1)' }}>
+                Harveyのサイト
+            </h1>
+        </div>
+    </div>
+);
+
+// 4. リンク
+const SocialLinks = () => (
+    <div className="text-slate-700 font-terminal space-y-3">
+        <h3 className="text-lg text-slate-800 border-b border-slate-300/70 pb-1 mb-3">~/Links</h3>
+        <a href="#" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
+            <img src="https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25205.png" alt="Twitter Icon" className="w-6 h-6 rounded" />
+            <span>Twitter</span>
+        </a>
+        <a href="#" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
+            <img src="https://assets.vrchat.com/www/images/favicon.ico" alt="VRChat Icon" className="w-6 h-6" />
+            <span>VRChat</span>
+        </a>
+    </div>
+);
+
+// --- Waybar風ステータスバー ---
+const Waybar = () => {
+    const [time, setTime] = useState(new Date());
+
+    useEffect(() => {
+        const timerId = setInterval(() => setTime(new Date()), 1000);
+        return () => clearInterval(timerId);
+    }, []);
+
+    const formattedTime = time.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    const formattedDate = time.toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' });
+
+    return (
+        <div className="absolute top-0 left-0 right-0 h-8 bg-black/20 backdrop-blur-md text-slate-800 font-terminal text-sm flex items-center justify-between px-4 z-10">
+            {/* Left Section: WM Icon and Workspace */}
+            <div className="flex items-center gap-4">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v16M20 4v16M4 12h16" /></svg>
+                <span>[ws: 1]</span>
+            </div>
+
+            {/* Center Section: Clock */}
+            <div className="flex items-center gap-2">
+                <span>{formattedDate}</span>
+                <span className="font-bold text-base">{formattedTime}</span>
+            </div>
+
+            {/* Right Section: System Tray Icons */}
+            <div className="flex items-center gap-4">
+                {/* Wifi Icon */}
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.111 16.555a5.5 5.5 0 017.778 0M4.875 12.125a12 12 0 0114.25 0M12 20.25h.01" /></svg>
+                {/* Battery Icon */}
+                <span>BAT 98%</span>
+            </div>
+        </div>
+    );
+};
+
+// --- メイン画面本体 ---
+const MainScreen = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    const windowBgTransparency = 'bg-slate-100/0 backdrop-blur-xl';
+
+    useEffect(() => {
+        // ページ遷移後にアニメーションを開始するためのフラグ
+        const timer = setTimeout(() => setIsMounted(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
+
+    return (
+        // 背景。Hyprlandのデフォルト壁紙のようなグラデーション
+        <div 
+            className="h-screen w-screen overflow-hidden bg-gradient-to-br from-teal-100 to-green-200 relative font-sans"
+            style={{ fontSize: 'calc(0.5vw + 8px)' }}
+        >
+            <Waybar />
             
-            {/* 左上ロゴ */}
-            <div className="absolute top-8 left-8 z-10">
-                <h1 className="font-kiwi text-6xl text-[#edd8ec] text-outline tracking-widest">
-                    ハービーのへや
-                </h1>
-                 </div>
+            {/* isMountedがtrueになったらウィンドウを表示開始 */}
+            {isMounted && (
+                <>
+                    {/* 1. fastfetch風の自己紹介画面 */}
+                    <Window
+                        title="guest@harvey-desktop: ~"
+                        initialPosition={{ x: '8%', y: '60%' }}
+                        size={{ w: '30%', h: '28%' }}
+                        animationDelay={600}
+                        contentDelay={600}
+                        bgStyle={windowBgTransparency}
+                    >
+                        <FastFetchProfile />
+                    </Window>
 
-            {/* 中央コンテナ */}
-            <div className="container mx-auto w-full h-full flex flex-col md:flex-row relative px-4 sm:px-8">
-                
-                {/* 左：自己紹介エリア */}
-                <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-center items-center md:items-start pt-32 md:pt-0 z-10">
-                    <div className={`transition-opacity duration-1000 delay-1000 ${animationState === 'landed' ? 'opacity-100' : 'opacity-0'}`}>
-                        <h2 className="font-kiwi text-6xl text-[#edd8ec] text-outline mb-6 text-center md:text-left">
-                            わたしについて
-                        </h2>
-                        <p className="font-kiwi text-xl text-gray-600 leading-loose bg-white/50 p-6 rounded-lg backdrop-blur-sm shadow-sm border-l-4 border-[#edd8ec] text-center md:text-left">
-                            名前:Harvey<br/>
-                            性別:♂<br/>
-                            年齢:?<br/>
-                            趣味:散歩、映画/ドラマ、紅茶<br/>
-                            生まれ:埼玉県<br/>
-                            在住:東京都<br/>
-                            なんかそれっぽいことを書いといてください。
-                            わからないです。
-                        </p>
-                    </div>
-                </div>
+                    {/* 2. キャラクター画像 */}
+                    <Window
+                        title="ImageViewer"
+                        initialPosition={{ x: '55%', y: '25%' }}
+                        size={{ w: '25%', h: '55%' }}
+                        animationDelay={400}
+                        contentDelay={500}
+                        customClass="flex items-center justify-center"
+                        bgStyle={windowBgTransparency}
+                    >
+                        <ImageViewer />
+                    </Window>
+                    
+                    {/* 3. ブラウザ風画面 */}
+                    <Window
+                        title="Browser"
+                        initialPosition={{ x: '5%', y: '10%' }}
+                        size={{ w: '35%', h: '35%' }}
+                        animationDelay={200}
+                        contentDelay={400}
+                        bgStyle={windowBgTransparency}
+                    >
+                        <Browser />
+                    </Window>
 
-                {/* 右：キャラクターエリア */}
-                <div className="w-1/2 h-full relative flex items-center justify-center">
-                    {/* キャラクター画像コンテナ */}
-                    <div className={`w-[750px] h-[750px] absolute right-[-100px] ${animationState !== 'waiting' ? 'animate-throw-in' : 'opacity-0'}`}>
-                        <div className="w-full h-full relative group">
-                            {/* キャラ画像：しりもちをついて着地するので、画像自体も着地時に少しバウンドさせる */}
-                            <img 
-                                src={characterImage} 
-                                alt="キャラクター" 
-                                className={`w-full h-full object-contain drop-shadow-2xl ${animationState === 'landed' ? 'animate-butt-bounce' : ''}`}
-                            />
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* 装飾レイヤー */}
-            <div className="absolute inset-0 pointer-events-none opacity-5 overflow-hidden">
-                <div className="font-terminal text-6xl text-black rotate-[-10deg] absolute top-[-50px] left-[-50px]">
-                    sudo pacman -Syu
-                </div>
-                <div className="font-terminal text-8xl text-black rotate-[5deg] absolute bottom-10 right-[-100px]">
-                    :wq
-                </div>
-            </div>
+                    {/* 4. リンク画面 */}
+                    <Window
+                        title="Links"
+                        initialPosition={{ x: '40%', y: '50%' }}
+                        size={{ w: '15%', h: '20%' }}
+                        animationDelay={700}
+                        contentDelay={600}
+                        bgStyle={windowBgTransparency}
+                    >
+                        <SocialLinks />
+                    </Window>
+                </>
+            )}
 
         </div>
     );
