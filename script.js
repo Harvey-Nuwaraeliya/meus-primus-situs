@@ -180,11 +180,13 @@ const FastFetchProfile = () => {
         "Note": "なんかそれっぽいことを書いといてください。わからないです。"
     };
     const asciiLogo = `
-    H   H   EEEEE   AAA   RRRR   V   V  EEEEE  Y   Y
-    H   H   E      A   A  R   R  V   V  E       Y Y
-    HHHHH   EEEE   AAAAA  RRRR    V V   EEEE     Y
-    H   H   E      A   A  R  R     V    E        Y
-    H   H   EEEEE  A   A  R   R    V     EEEEE    Y
+          /\\
+         /  \\
+        /    \\
+       /      \\
+      /        \\
+     /          \\
+    /____________\\
     `;
 
     return (
@@ -233,7 +235,7 @@ const Browser = () => (
             <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
             <div className="bg-white/50 text-slate-700 text-xs rounded-md px-3 py-1 ml-2 flex-grow">
-                https://harvey.dev/
+                https://harvey.aboutme/
             </div>
         </div>
         <div className="flex-grow flex items-center justify-center">
@@ -249,11 +251,11 @@ const SocialLinks = () => (
     <div className="text-slate-700 font-terminal space-y-3">
         <h3 className="text-lg text-slate-800 border-b border-slate-300/70 pb-1 mb-3">~/Links</h3>
         <a href="#" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
-            <img src="https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25205.png" alt="Twitter Icon" className="w-6 h-6 rounded" />
+            <img src="./images/Twitter.png" alt="Twitter Icon" className="w-6 h-6 rounded" />
             <span>Twitter</span>
         </a>
         <a href="#" className="flex items-center space-x-2 hover:bg-black/5 p-1 rounded-md transition-colors">
-            <img src="https://assets.vrchat.com/www/images/favicon.ico" alt="VRChat Icon" className="w-6 h-6" />
+            <img src="./images/VRC.png" alt="VRChat Icon" className="w-6 h-6" />
             <span>VRChat</span>
         </a>
     </div>
