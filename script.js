@@ -190,8 +190,8 @@ const FastFetchProfile = () => {
     `;
 
     return (
-        <div className="font-terminal text-sm text-slate-600 flex space-x-4">
-            <pre className="text-slate-500 text-xs leading-tight">{asciiLogo}</pre>
+        <div className="font-terminal text-slate-600 flex space-x-4">
+            <pre className="text-slate-500 leading-tight" style={{ fontSize: '0.8em' }}>{asciiLogo}</pre>
             <div className="border-l border-slate-400 pl-4">
                 <p className="text-slate-800 font-bold">guest@harvey-desktop</p>
                 <p>--------------------</p>
@@ -239,7 +239,7 @@ const Browser = () => (
             </div>
         </div>
         <div className="flex-grow flex items-center justify-center">
-            <h1 className="font-kiwi text-5xl text-slate-700 tracking-widest" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.1)' }}>
+            <h1 className="font-kiwi text-slate-700 tracking-widest" style={{ fontSize: '4em', textShadow: '1px 1px 3px rgba(0,0,0,0.1)' }}>
                 Harveyのサイト
             </h1>
         </div>
