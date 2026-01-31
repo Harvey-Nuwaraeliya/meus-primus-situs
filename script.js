@@ -230,19 +230,64 @@ const ImageViewer = () => {
 
 // 3. ブラウザ
 const Browser = () => (
-    <div className="h-full flex flex-col">
-        <div className="flex items-center bg-slate-200/60 p-1 rounded-md mb-2">
+    <div className="h-full flex flex-col text-xs font-sans text-slate-800">
+        {/* URLバー */}
+        <div className="flex-shrink-0 flex items-center bg-slate-200/60 p-1 rounded-md mb-2">
             <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
             <div className="bg-white/50 text-slate-700 text-xs rounded-md px-3 py-1 ml-2 flex-grow">
-                https://harvey.aboutme.com/
+                https://portal.harvey.net/
             </div>
         </div>
-        <div className="flex-grow flex items-center justify-center">
-            <h1 className="font-kiwi text-slate-700 tracking-widest" style={{ fontSize: '4em', textShadow: '1px 1px 3px rgba(0,0,0,0.1)' }}>
-                ようこそ<br/>
-                □□□□
-            </h1>
+        
+        {/* コンテンツエリア */}
+        <div className="flex-grow overflow-y-auto p-1 space-y-2">
+            {/* 検索とロゴ */}
+            <div className="flex items-center space-x-2">
+                <h1 className="font-kiwi text-blue-600 text-lg font-bold">Harvey!</h1>
+                <div className="flex-grow flex">
+                    <input type="text" className="w-full bg-white/70 border border-slate-300 rounded-l-md px-2 py-0.5 text-xs focus:outline-none" placeholder="キーワードを入力" />
+                    <button className="bg-blue-500 text-white px-2 rounded-r-md">検索</button>
+                </div>
+            </div>
+
+            {/* カテゴリリンク */}
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-blue-700">
+                <a href="#" className="hover:underline">ニュース</a>
+                <a href="#" className="hover:underline">天気</a>
+                <a href="#" className="hover:underline">ファイナンス</a>
+                <a href="#" className="hover:underline">ショッピング</a>
+                <a href="#" className="hover:underline">ブログ</a>
+                <a href="#" className="hover:underline">VRChat</a>
+            </div>
+
+            {/* メインコンテンツ (ニュースと天気) */}
+            <div className="grid grid-cols-3 gap-2">
+                {/* ニュースセクション */}
+                <div className="col-span-2 space-y-1">
+                    <h2 className="font-bold border-b border-slate-300">主要ニュース</h2>
+                    <ul className="list-disc list-inside space-y-0.5 text-slate-700">
+                        <li><a href="#" className="hover:underline">Steam Frame 注目の新機能</a></li>
+                        <li><a href="#" className="hover:underline">ClicksとUniherz 競争の行方</a></li>
+                        <li><a href="#" className="hover:underline">CompTIA CySA+更新費用 民衆の怒り</a></li>
+                        <li><a href="#" className="hover:underline">近所のパン屋 うまい</a></li>
+                        <li><a href="#" className="hover:underline">サブスク解約忘れ 財政破綻</a></li>
+                    </ul>
+                    <div className="pt-1">
+                        <img src="./images/news.png" alt="ニュース画像" className="w-full h-auto rounded-md" />
+                    </div>
+                </div>
+
+                {/* 天気セクション */}
+                <div className="space-y-1">
+                    <h2 className="font-bold border-b border-slate-300">天気</h2>
+                    <div className="bg-white/30 p-1 rounded-md text-center">
+                        <p className="font-bold">凍京</p>
+                        <p>☀️ 晴れ</p>
+                        <p>-15℃ / -43℃</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 );
