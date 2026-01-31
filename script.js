@@ -208,15 +208,21 @@ const FastFetchProfile = () => {
 // 2. イメージビューア
 const ImageViewer = () => {
     const images = [
-        './images/character_normal.png',
-        './images/character_stand.png'
+        './images/slide1.jpg',
+        './images/slide2.jpg',
+        './images/slide3.jpg',
+        './images/slide4.jpg',
+        './images/slide5.jpg',
+        './images/slide6.jpg',
+        './images/slide7.jpg',
+        './images/slide8.jpg',
     ];
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const slideInterval = setInterval(() => {
             setCurrentIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 10000); // 10秒ごとに画像を切り替え
+        }, 5000); // 5秒ごとに画像を切り替え
 
         return () => clearInterval(slideInterval); // コンポーネントのアンマウント時にタイマーをクリア
     }, []);
