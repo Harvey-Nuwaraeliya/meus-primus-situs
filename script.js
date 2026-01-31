@@ -11,7 +11,7 @@ const PHASE = {
 const BootScreen = ({ onComplete }) => {
     const [logs, setLogs] = useState([]);
     const bootLogs = [ 
-        "[    0.000000] Harveyのウェブサイト v0.9",
+        "[    0.000000] Hrvyland v0.9",
         "[    0.000000] Command line: entry=index.html mode=Jikoshoukai",
         "[    0.034211] Initializing render engine...",
         "[    0.152331] Viewport detected, preparing render surface.",
@@ -191,7 +191,7 @@ const FastFetchProfile = () => {
 
     return (
         <div className="font-terminal text-slate-600 flex space-x-4">
-            <pre className="text-slate-500 leading-tight" style={{ fontSize: '0.8em' }}>{asciiLogo}</pre>
+            <pre className="text-blue-400 leading-tight" style={{ fontSize: '0.8em' }}>{asciiLogo}</pre>
             <div className="border-l border-slate-400 pl-4">
                 <p className="text-slate-800 font-bold">guest@harvey-desktop</p>
                 <p>--------------------</p>
@@ -235,12 +235,13 @@ const Browser = () => (
             <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
             <div className="bg-white/50 text-slate-700 text-xs rounded-md px-3 py-1 ml-2 flex-grow">
-                https://harvey.aboutme/
+                https://harvey.aboutme.com/
             </div>
         </div>
         <div className="flex-grow flex items-center justify-center">
             <h1 className="font-kiwi text-slate-700 tracking-widest" style={{ fontSize: '4em', textShadow: '1px 1px 3px rgba(0,0,0,0.1)' }}>
-                Harveyのサイト
+                ようこそ<br/>
+                □□□□
             </h1>
         </div>
     </div>
@@ -278,7 +279,7 @@ const Waybar = () => {
             {/* Left Section: WM Icon and Workspace */}
             <div className="flex items-center gap-4">
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v16M20 4v16M4 12h16" /></svg>
-                <span>[ws: 1]</span>
+                <span>[□□□■]</span>
             </div>
 
             {/* Center Section: Clock */}
@@ -330,15 +331,15 @@ const MainScreen = () => {
         browser: { initialPosition: { x: '5%', y: '10%' }, size: { w: '35%', h: '35%' } },
         imageViewer: { initialPosition: { x: '55%', y: '25%' }, size: { w: '40%', h: '60%' } },
         profile: { initialPosition: { x: '8%', y: '60%' }, size: { w: '30%', h: '28%' } },
-        links: { initialPosition: { x: '40%', y: '50%' }, size: { w: '15%', h: '20%' } },
+        links: { initialPosition: { x: '39%', y: '50%' }, size: { w: '15%', h: '20%' } },
     };
 
     const portraitLayout = {
         // 縦長のレイアウトではウィンドウを縦に並べる
-        browser: { initialPosition: { x: '5%', y: '8%' }, size: { w: '90%', h: '25%' } },
-        imageViewer: { initialPosition: { x: '5%', y: '35%' }, size: { w: '90%', h: '30%' } },
-        profile: { initialPosition: { x: '5%', y: '67%' }, size: { w: '90%', h: '20%' } },
-        links: { initialPosition: { x: '5%', y: '89%' }, size: { w: '90%', h: '10%' } },
+        browser: { initialPosition: { x: '5%', y: '3%' }, size: { w: '90%', h: '25%' } },
+        imageViewer: { initialPosition: { x: '5%', y: '30%' }, size: { w: '90%', h: '30%' } },
+        profile: { initialPosition: { x: '5%', y: '62%' }, size: { w: '90%', h: '20%' } },
+        links: { initialPosition: { x: '5%', y: '84%' }, size: { w: '90%', h: '15%' } },
     };
 
     const layout = isPortrait ? portraitLayout : landscapeLayout;
