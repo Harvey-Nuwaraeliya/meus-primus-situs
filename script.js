@@ -89,7 +89,7 @@ const LyScreen = ({ onComplete }) => {
     }, [step]);
 
     return (
-        <div className="h-screen w-screen bg-[#1a1b26] text-[#a9b1d6] font-terminal flex items-center justify-center">
+        <div className="h-screen w-screen bg-black text-[#a9b1d6] font-terminal flex items-center justify-center">
             <div className="border-2 border-[#414868] p-8 w-[400px] shadow-lg relative">
                 {/* 擬似的なLyのUI */}
                 <div className="absolute top-[-12px] left-4 bg-[#1a1b26] px-2 text-[#7aa2f7] font-bold">
@@ -173,10 +173,10 @@ const FastFetchProfile = () => {
     const profile = {
         "Name": "Harvey",
         "Gender": "♂",
-        "Age": "?",
-        "Hobbies": "散歩, 映画/ドラマ, 紅茶",
-        "Born": "埼玉県",
-        "Residence": "東京都",
+        "Age": "2-",
+        "Education":"LLB",
+        "From": "埼玉県",
+        "Resides in": "東京都",
         "Note": "予定は未定"
     };
     const asciiLogo = `
@@ -184,7 +184,7 @@ const FastFetchProfile = () => {
          /  \\
         /    \\
        /      \\
-      /        \\
+      /   ^_^  \\
      /          \\
     /____________\\
     `;
@@ -298,10 +298,27 @@ const Waybar = () => {
     );
 };
 
+// --- Custom Hook for Viewport ---
+const useViewport = () => {
+    const [isPortrait, setIsPortrait] = useState(window.innerWidth / window.innerHeight < 1);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsPortrait(window.innerWidth / window.innerHeight < 1);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return { isPortrait };
+};
+
 // --- メイン画面本体 ---
 const MainScreen = () => {
     const [isMounted, setIsMounted] = useState(false);
-    const windowBgTransparency = 'bg-slate-100/0 backdrop-blur-xl';
+    const { isPortrait } = useViewport();
+    const windowBgTransparency = 'bg-slate-100/20 backdrop-blur-xl';
 
     useEffect(() => {
         // ページ遷移後にアニメーションを開始するためのフラグ
@@ -309,11 +326,33 @@ const MainScreen = () => {
         return () => clearTimeout(timer);
     }, []);
 
+    const landscapeLayout = {
+        browser: { initialPosition: { x: '5%', y: '10%' }, size: { w: '35%', h: '35%' } },
+        imageViewer: { initialPosition: { x: '55%', y: '25%' }, size: { w: '40%', h: '60%' } },
+        profile: { initialPosition: { x: '8%', y: '60%' }, size: { w: '30%', h: '28%' } },
+        links: { initialPosition: { x: '40%', y: '50%' }, size: { w: '15%', h: '20%' } },
+    };
+
+    const portraitLayout = {
+        // 縦長のレイアウトではウィンドウを縦に並べる
+        browser: { initialPosition: { x: '5%', y: '8%' }, size: { w: '90%', h: '25%' } },
+        imageViewer: { initialPosition: { x: '5%', y: '35%' }, size: { w: '90%', h: '30%' } },
+        profile: { initialPosition: { x: '5%', y: '67%' }, size: { w: '90%', h: '20%' } },
+        links: { initialPosition: { x: '5%', y: '89%' }, size: { w: '90%', h: '10%' } },
+    };
+
+    const layout = isPortrait ? portraitLayout : landscapeLayout;
+
     return (
         // 背景。Hyprlandのデフォルト壁紙のようなグラデーション
         <div 
-            className="h-screen w-screen overflow-hidden bg-gradient-to-br from-teal-100 to-green-200 relative font-sans"
-            style={{ fontSize: 'calc(0.5vw + 8px)' }}
+            className="h-screen w-screen overflow-hidden relative font-sans"
+            style={{
+                fontSize: 'calc(0.5vw + 8px)',
+                backgroundImage: "url('./images/wallpaper.svg')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
         >
             <Waybar />
             
@@ -323,8 +362,8 @@ const MainScreen = () => {
                     {/* 1. fastfetch風の自己紹介画面 */}
                     <Window
                         title="guest@harvey-desktop: ~"
-                        initialPosition={{ x: '8%', y: '60%' }}
-                        size={{ w: '30%', h: '28%' }}
+                        initialPosition={layout.profile.initialPosition}
+                        size={layout.profile.size}
                         animationDelay={600}
                         contentDelay={600}
                         bgStyle={windowBgTransparency}
@@ -335,8 +374,8 @@ const MainScreen = () => {
                     {/* 2. キャラクター画像 */}
                     <Window
                         title="ImageViewer"
-                        initialPosition={{ x: '55%', y: '25%' }}
-                        size={{ w: '40%', h: '60%' }}
+                        initialPosition={layout.imageViewer.initialPosition}
+                        size={layout.imageViewer.size}
                         animationDelay={400}
                         contentDelay={500}
                         customClass="flex items-center justify-center"
@@ -348,8 +387,8 @@ const MainScreen = () => {
                     {/* 3. ブラウザ風画面 */}
                     <Window
                         title="Browser"
-                        initialPosition={{ x: '5%', y: '10%' }}
-                        size={{ w: '35%', h: '35%' }}
+                        initialPosition={layout.browser.initialPosition}
+                        size={layout.browser.size}
                         animationDelay={200}
                         contentDelay={400}
                         bgStyle={windowBgTransparency}
@@ -360,8 +399,8 @@ const MainScreen = () => {
                     {/* 4. リンク画面 */}
                     <Window
                         title="Links"
-                        initialPosition={{ x: '40%', y: '50%' }}
-                        size={{ w: '15%', h: '20%' }}
+                        initialPosition={layout.links.initialPosition}
+                        size={layout.links.size}
                         animationDelay={700}
                         contentDelay={600}
                         bgStyle={windowBgTransparency}
