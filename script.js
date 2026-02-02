@@ -177,6 +177,7 @@ const FastFetchProfile = () => {
         "Education":"LLB",
         "From": "埼玉県",
         "Resides in": "東京都",
+        "Languages": "ja_JP, en_JP",
         "Note": "予定は未定"
     };
     const asciiLogo = `
@@ -184,7 +185,7 @@ const FastFetchProfile = () => {
          /  \\
         /    \\
        /      \\
-      /   ^_^  \\
+      /(  .̫ . )\\
      /          \\
     /____________\\
     `;
@@ -193,7 +194,7 @@ const FastFetchProfile = () => {
         <div className="font-terminal text-slate-600 flex space-x-4">
             <pre className="text-blue-400 leading-tight" style={{ fontSize: '0.8em' }}>{asciiLogo}</pre>
             <div className="border-l border-slate-400 pl-4">
-                <p className="text-slate-800 font-bold">guest@harvey-desktop</p>
+                <p className="text-slate-800 font-bold">guest@harvey-WS</p>
                 <p>--------------------</p>
                 {Object.entries(profile).map(([key, value]) => (
                     <p key={key}>
@@ -274,7 +275,7 @@ const Browser = () => (
                     <h2 className="font-bold border-b border-slate-300">主要ニュース</h2>
                     <ul className="list-disc list-inside space-y-0.5 text-slate-700">
                         <li><a href="#" className="hover:underline">Steam Frame 注目の新機能</a></li>
-                        <li><a href="#" className="hover:underline">ClicksとUniherz 競争の行方</a></li>
+                        <li><a href="#" className="hover:underline">ClicksとUnihertz 競争の行方</a></li>
                         <li><a href="#" className="hover:underline">CompTIA CySA+更新費用 民衆の怒り</a></li>
                         <li><a href="#" className="hover:underline">近所のパン屋 うまい</a></li>
                         <li><a href="#" className="hover:underline">サブスク解約忘れ 財政破綻</a></li>
@@ -379,18 +380,18 @@ const MainScreen = () => {
     }, []);
 
     const landscapeLayout = {
-        browser: { initialPosition: { x: '5%', y: '10%' }, size: { w: '35%', h: '35%' } },
+        browser: { initialPosition: { x: '8%', y: '58%' }, size: { w: '35%', h: '40%' } },
         imageViewer: { initialPosition: { x: '55%', y: '25%' }, size: { w: '40%', h: '60%' } },
-        profile: { initialPosition: { x: '8%', y: '60%' }, size: { w: '30%', h: '28%' } },
-        links: { initialPosition: { x: '39%', y: '50%' }, size: { w: '15%', h: '20%' } },
+        profile: { initialPosition: { x: '5%', y: '7%' }, size: { w: '30%', h: '28%' } },
+        links: { initialPosition: { x: '37%', y: '33%' }, size: { w: '15%', h: '23%' } },
     };
 
     const portraitLayout = {
         // 縦長のレイアウトではウィンドウを縦に並べる
-        browser: { initialPosition: { x: '5%', y: '3%' }, size: { w: '90%', h: '25%' } },
-        imageViewer: { initialPosition: { x: '5%', y: '30%' }, size: { w: '90%', h: '30%' } },
-        profile: { initialPosition: { x: '5%', y: '62%' }, size: { w: '90%', h: '20%' } },
-        links: { initialPosition: { x: '5%', y: '84%' }, size: { w: '90%', h: '15%' } },
+        browser: { initialPosition: { x: '5%', y: '56%' }, size: { w: '45%', h: '42%' } },
+        imageViewer: { initialPosition: { x: '5%', y: '25%' }, size: { w: '90%', h: '30%' } },
+        profile: { initialPosition: { x: '5%', y: '4%' }, size: { w: '90%', h: '20%' } },
+        links: { initialPosition: { x: '52%', y: '56%' }, size: { w: '45%', h: '42%' } },
     };
 
     const layout = isPortrait ? portraitLayout : landscapeLayout;
