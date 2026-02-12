@@ -11,18 +11,17 @@ const PHASE = {
 const BootScreen = ({ onComplete }) => {
     const [logs, setLogs] = useState([]);
     const bootLogs = [ 
-        "[    0.000000] Hrvyland v0.9",
-        "[    0.000000] Command line: entry=index.html mode=Jikoshoukai",
-        "[    0.034211] Initializing render engine...",
-        "[    0.152331] Viewport detected, preparing render surface.",
-        "[    0.455122] Calibrating connection...",
-        "[    0.671003] Loading assets... [fonts, styles, scripts]",
-        "[    0.992110] [OK] Mounted Google Fonts (Kiwi Maru, JetBrains Mono).",
-        "[    1.200112] [OK] Parsed CSS animations.",
-        "[    1.450022] [OK] Initialized React DOM.",
-        "[    1.600123] Starting renderer... preparing for user login.",
-        "[    1.800000] [OK] Reached target Interactive Mode.",
-        "[    2.000000] Welcome, my friend!"
+        '[    0.000000] Lynex kernel 6.7.6-arch7 loaded.',
+        '[    0.000000] Command line: entry=index.html mode=Interactive',
+        '[    0.034211] systemd-boot[245]: Initializing system...',
+        '[    0.152331] [  OK  ] Reached target Basic System.',
+        '[    0.455122] [  OK  ] Started Hrvyland DM.',
+        '[    0.671003] [  OK  ] Reached target Graphical Interface.',
+        '[    0.992110] [  OK  ] Mounting Google Fonts (Kiwi Maru, JetBrains Mono)...',
+        '[    1.200112] [  OK  ] Loading assets... [fonts, styles, scripts]',
+        '[    1.450022] [  OK  ] Initialized React DOM.',
+        '[    1.600123] [  OK  ] Reached target Interactive Mode.',
+        '[    2.000000] Welcome, my friend!',
     ];
 
     useEffect(() => {
@@ -177,7 +176,7 @@ const FastFetchProfile = () => {
         "Education":"LLB",
         "From": "埼玉県",
         "Resides in": "東京都",
-        "Languages": "ja_JP, en_JP",
+        "Languages": "ja_JP, en_US",
         "Note": "予定は未定"
     };
     const asciiLogo = `
@@ -274,10 +273,10 @@ const Browser = () => (
                 <div className="col-span-2 space-y-1">
                     <h2 className="font-bold border-b border-slate-300">主要ニュース</h2>
                     <ul className="list-disc list-inside space-y-0.5 text-slate-700">
-                        <li><a href="#" className="hover:underline">Steam Frame 注目の新機能</a></li>
-                        <li><a href="#" className="hover:underline">ClicksとUnihertz 競争の行方</a></li>
-                        <li><a href="#" className="hover:underline">CompTIA CySA+更新費用 民衆の怒り</a></li>
-                        <li><a href="#" className="hover:underline">近所のパン屋 うまい</a></li>
+                        <li><a href="#" className="hover:underline">凍京都で降雪10m</a></li>
+                        <li><a href="#" className="hover:underline">紅茶値上げ相次ぐ </a></li>
+                        <li><a href="#" className="hover:underline">CompTIA 更新費用の罠</a></li>
+                        <li><a href="#" className="hover:underline">NFL 今年も米国が優勝</a></li>
                         <li><a href="#" className="hover:underline">サブスク解約忘れ 財政破綻</a></li>
                     </ul>
                     <div className="pt-1">
